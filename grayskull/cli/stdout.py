@@ -103,7 +103,7 @@ def print_requirements(
         print_req(req_list)
 
     print_msg(f"\n{Fore.RED}RED{Style.RESET_ALL}: Missing packages")
-    print_msg(f"{Fore.GREEN}GREEN{Style.RESET_ALL}: Packages available on conda-forge")
+    print_msg(f"{Fore.GREEN}GREEN{Style.RESET_ALL}: Packages available on conda-forge or alba-controls")
 
     if CLIConfig().list_missing_deps:
         if all_missing_deps:

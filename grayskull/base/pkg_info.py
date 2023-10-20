@@ -5,7 +5,8 @@ import requests
 
 @lru_cache(maxsize=35)
 def is_pkg_available(pkg_name: str, channel: str = "conda-forge") -> bool:
-    """Verify if the package is available on Anaconda for a specific channel.
+    """Verify if the package is available on Anaconda for a specific channel
+    or in the local ALBA conda package repository.
 
     :param pkg_name: Package name
     :param channel: Anaconda channel
@@ -14,6 +15,10 @@ def is_pkg_available(pkg_name: str, channel: str = "conda-forge") -> bool:
     response = requests.get(
         url=f"https://anaconda.org/{channel}/{pkg_name}/files", allow_redirects=False
     )
+    if response.status_code != 200:
+        response = requests.get(
+            url=f"http://condarepos.cells.es:30007/api/channels/alba-controls/packages/{pkg_name}", allow_redirects=False
+        )
     return response.status_code == 200
 
 
